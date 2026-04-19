@@ -48,7 +48,7 @@
     border-top:3px solid var(--ink);
     border-bottom:1px solid var(--ink);
     padding:14px 0 16px;margin-bottom:22px;
-    display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:end;
+    display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:end;
     position:relative;
   }
   header::after{
@@ -451,6 +451,87 @@
   .countdown-wrap{
     display:flex;align-items:baseline;gap:14px;margin-top:6px;
   }
+
+  /* ─── CUSMA Partners Scale Comparison ─── */
+  .cusma-partners{
+    margin-top:18px;padding:14px 16px;
+    background:var(--panel-warm);border:1px solid var(--line-soft);
+  }
+  .cp-header{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:10px;gap:14px;flex-wrap:wrap;
+  }
+  .cp-title{
+    font-family:'DM Serif Display',serif;font-size:16px;
+    color:var(--ink);font-weight:400;line-height:1.2;
+  }
+  .cp-title em{font-style:italic;color:var(--maple);font-weight:400}
+  .cp-source{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+  }
+  .cp-bar{
+    display:flex;height:34px;border:1px solid var(--ink);
+    background:var(--panel);overflow:hidden;margin-bottom:8px;
+  }
+  .cp-seg{
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;min-width:0;
+  }
+  .cp-seg-lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:0.08em;text-transform:uppercase;font-weight:600;
+    white-space:nowrap;padding:0 8px;
+  }
+  .cp-us{background:var(--maple);color:var(--panel)}
+  .cp-other{background:#d9d3c8;color:var(--ink)}
+  .cp-mx{background:var(--navy);color:var(--panel)}
+  .cp-barkey{
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+    font-size:10.5px;color:var(--ink-2);margin-bottom:12px;
+    font-family:'IBM Plex Mono',monospace;letter-spacing:0.03em;
+  }
+  .cp-barkey strong{color:var(--navy);font-weight:700}
+  .cp-sw{
+    display:inline-block;width:10px;height:10px;margin-right:5px;
+    vertical-align:middle;border:1px solid var(--ink);
+  }
+  .cp-sw-us{background:var(--maple)}
+  .cp-sw-other{background:#d9d3c8}
+  .cp-sw-mx{background:var(--navy)}
+  .cp-pills{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    margin-bottom:10px;
+  }
+  .cp-pill{
+    background:var(--panel);padding:10px 12px;
+    border-left:2px solid var(--line);
+  }
+  .cp-pill-us{border-left-color:var(--maple)}
+  .cp-pill-mx{border-left-color:var(--navy)}
+  .cp-pill-ratio{border-left-color:var(--gold)}
+  .cp-pill-lbl{
+    font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;margin-bottom:3px;
+  }
+  .cp-pill-val{
+    font-family:'DM Serif Display',serif;font-size:22px;
+    line-height:1;font-weight:400;color:var(--ink);
+  }
+  .cp-pill-us .cp-pill-val{color:var(--maple-deep)}
+  .cp-pill-mx .cp-pill-val{color:var(--navy)}
+  .cp-pill-ratio .cp-pill-val{color:var(--gold)}
+  .cp-pill-val span{font-size:13px;color:var(--muted);margin-left:2px}
+  .cp-pill-sub{
+    font-size:10px;color:var(--ink-2);margin-top:3px;line-height:1.35;
+  }
+  .cp-note{
+    font-size:11.5px;line-height:1.55;color:var(--ink-2);
+    padding-top:8px;border-top:1px solid var(--line-soft);
+  }
+  .cp-note strong{color:var(--ink)}
+  .cp-note em{font-style:italic;color:var(--maple-deep)}
+
 </style>
 </head>
 <body>
@@ -461,7 +542,7 @@
   </div>
   <div class="title-wrap">
     <h1>Canada's Trade With the U.S. — <em>Where the Tariffs Bit</em></h1>
-    <div class="sub">Country Analysis Dashboard · by Rachna Agrawal · IMS 6304 / MIS 6313 · <strong>Data through Feb 2026</strong></div>
+    <div class="sub">Country Analysis Dashboard · IMS 6304 / MIS 6313 · <strong>Data through Feb 2026</strong></div>
   </div>
 </header>
 
@@ -633,8 +714,8 @@
       </div>
       <div class="countdown-wrap">
         <div>
-          <div class="countdown-num">74</div>
-          <div class="countdown-lbl">Days until July 1, 2026</div>
+          <div class="countdown-num" id="cusmaCountdown">—</div>
+          <div class="countdown-lbl" id="cusmaCountdownLbl">Days until July 1, 2026</div>
         </div>
         <div style="flex:1;padding-left:18px;border-left:1px solid var(--line-soft)">
           <div style="font-size:13px;line-height:1.5;color:var(--ink-2)">
@@ -642,7 +723,46 @@
           </div>
         </div>
       </div>
-      <div class="ai-takeaway"><strong>Why this dashboard matters now:</strong> Every number shown assumes CUSMA holds. Negotiators have fewer than 11 weeks to reach terms.</div>
+
+      <!-- CUSMA Partners scale comparison -->
+      <div class="cusma-partners">
+        <div class="cp-header">
+          <div class="cp-title">Scale of Canada's trade with its <em>two</em> CUSMA partners</div>
+          <div class="cp-source">2024 · Canadian goods exports · CAD billions</div>
+        </div>
+        <div class="cp-bar" title="True proportions. Mexico = 1.1% of Canada's exports — barely visible, which is the point.">
+          <div class="cp-seg cp-us" style="flex: 75.9"><span class="cp-seg-lbl">United States · 75.9%</span></div>
+          <div class="cp-seg cp-other" style="flex: 23.0"><span class="cp-seg-lbl">Rest of world · 23.0%</span></div>
+          <div class="cp-seg cp-mx" style="flex: 1.1"></div>
+        </div>
+        <div class="cp-barkey">
+          <span class="cp-sw cp-sw-us"></span>USA ($596.2B)
+          <span class="cp-sw cp-sw-other"></span>Rest of world ($180.7B)
+          <span class="cp-sw cp-sw-mx"></span><strong>Mexico ($8.6B)</strong> ← barely visible, by design
+        </div>
+        <div class="cp-pills">
+          <div class="cp-pill cp-pill-us">
+            <div class="cp-pill-lbl">Canada → U.S.</div>
+            <div class="cp-pill-val">$596.2<span>B</span></div>
+            <div class="cp-pill-sub">75.9% of total exports</div>
+          </div>
+          <div class="cp-pill cp-pill-mx">
+            <div class="cp-pill-lbl">Canada → Mexico</div>
+            <div class="cp-pill-val">$8.6<span>B</span></div>
+            <div class="cp-pill-sub">1.1% of total exports</div>
+          </div>
+          <div class="cp-pill cp-pill-ratio">
+            <div class="cp-pill-lbl">Scale disparity</div>
+            <div class="cp-pill-val">69<span>×</span></div>
+            <div class="cp-pill-sub">U.S. trade vs Mexico trade</div>
+          </div>
+        </div>
+        <div class="cp-note">
+          CUSMA is a three-party agreement, but for Canada it is effectively a bilateral one. Mexico is Canada's <strong>5th-largest</strong> export market — smaller than China, Japan, and the U.K. Canada-Mexico exports <em>contracted 3.5%</em> in 2024 (Global Affairs Canada). If CUSMA collapses, Mexico cannot absorb a meaningful fraction of displaced U.S.-bound exports.
+        </div>
+      </div>
+
+      <div class="ai-takeaway"><strong>Why this dashboard matters now:</strong> Every number shown assumes CUSMA holds. Negotiators have fewer than 11 weeks to reach terms — and there is no viable trilateral substitute if they fail.</div>
     </div>
 
   </div>
@@ -727,6 +847,7 @@
     Statistics Canada, <em>Canadian International Merchandise Trade</em> monthly releases (Table 12-10-0011-01).
     Trade Data Online (<em>ised-isde.canada.ca</em>) — industry YoY.
     Statistics Canada, <em>Trade in Goods by Exporter Characteristics, 2024</em> — provincial data.
+    Global Affairs Canada, <em>2024 Annual Trade Update</em> — Mexico comparison.
   </div>
   <div style="text-align:right">
     <div><strong style="color:var(--ink)">IMS 6304 / MIS 6313</strong></div>
@@ -1407,6 +1528,32 @@ updateTreemap();
 updateIndustryChart();
 buildMap();
 renderRankList();
+
+// ════════════════════════════════════════════════════════════════
+// CUSMA REVIEW DEADLINE — live countdown
+// Calculates days remaining until July 1, 2026 each time the page loads.
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const el = document.getElementById('cusmaCountdown');
+  const lblEl = document.getElementById('cusmaCountdownLbl');
+  if(!el) return;
+  const deadline = new Date(2026, 6, 1); // July 1, 2026 (month is 0-indexed)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const daysLeft = Math.ceil((deadline - today) / msPerDay);
+  if(daysLeft > 0){
+    el.textContent = daysLeft;
+    if(lblEl) lblEl.textContent = daysLeft === 1 ? 'Day until July 1, 2026' : 'Days until July 1, 2026';
+  } else if(daysLeft === 0){
+    el.textContent = 'TODAY';
+    el.style.fontSize = '32px';
+    if(lblEl) lblEl.textContent = 'CUSMA review deadline';
+  } else {
+    el.textContent = Math.abs(daysLeft);
+    if(lblEl) lblEl.textContent = 'Days since July 1, 2026 deadline';
+  }
+})();
 
 // ════════════════════════════════════════════════════════════════
 // CHART 01 TABS — Switch between trend chart and AI insights
